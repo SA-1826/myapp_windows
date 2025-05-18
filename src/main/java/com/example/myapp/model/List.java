@@ -55,7 +55,7 @@ public class List {
   }
 
   public LocalDateTime getCreatedAt() {
-    returen createdAt;
+    return createdAt;
   }
 
   public void setCreatedAt(LocalDateTime createdAt) {
