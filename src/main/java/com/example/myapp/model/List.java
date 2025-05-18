@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.presistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa/domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -30,6 +30,7 @@ public class List {
   @Column(name = "updated_at",)
   private LocalDateTime updatedAt;
 
+  // --- Getter & Setter --- ※省略可
   public Long getId() {
     return id;
   }
