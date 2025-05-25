@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class MyListService {
-  
   @Autowired
   private MyListRepository myListRepository;
 
@@ -29,8 +28,16 @@ public class MyListService {
     return myListRepository.save(myList);
   }
 
+  // 更新（保存）
+  public MyList update(Long id, MyList newList) {
+    MyList existing = myListRepository.findById(id).orElseThrow(() -> new RuntimeException("ID " + id + " のリストが見つかりませんでした"));
+    existing.setTitle(newList.getTitle());
+    existing.setBody(newList.getBody());
+    return myListRepository.save(existing);
+  }
+
   // 削除
-  public void deleteById(Long id) {
+  public void delete(Long id) {
     myListRepository.deleteById(id);
   }
 }
