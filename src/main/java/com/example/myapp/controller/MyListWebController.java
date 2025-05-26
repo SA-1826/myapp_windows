@@ -34,7 +34,7 @@ public class MyListWebController {
   // 新規作成フォーム表示 (GET /lists/new)
   @GetMapping("/new")
   public String newForm(Model model) {
-    model.addAttribute("list", new MyList());
+    model.addAttribute("myList", new MyList());
     return "lists/new";
   }
 
