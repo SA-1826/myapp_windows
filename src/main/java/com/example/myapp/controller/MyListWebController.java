@@ -26,7 +26,7 @@ public class MyListWebController {
   // 詳細表示（GET /lists/{id}）
   @GetMapping("/{id}")
   public String show(@PathVariable Long id, Model model) {
-    MyList list = myListService.findById(id).orElseThrow(() -> new RuntimeException("ID " + id + " のデータが見つかりません"));
+    MyList list = myListService.findById(id).orElseThrow(() -> new IllegalArgumentException("指定されたIDのデータが存在しません" + id));
     model.addAttribute("myList", list);
     return "lists/show";
   }
@@ -41,8 +41,8 @@ public class MyListWebController {
   // 新規作成保存（POST /lists）
   @PostMapping
   public String create(@ModelAttribute MyList myList) {
-    myListService.save(myList);
-    return "redirect:/lists";
+    MyList savedList = myListService.save(myList); // 保存して戻り値をsavedListに受け取る
+    return "redirect:/lists/" + savedList.getId();
   }
 
   // 編集画面表示（GET /lists/{id}/edit）
