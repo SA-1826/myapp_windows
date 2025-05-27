@@ -5,6 +5,16 @@
     <title>MyList詳細</title>
   </head>
   <body>
-    <h1>MyList詳細</h1>
+    <h1>リスト詳細</h1>
+    <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
+    <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>
+    <p><strong>本文：</strong><span th:text="${myList.body}"></span></p>
+
+    <a th:href="@{/lists}">一覧に戻る</a>
+    <a th:href="@{/lists/{id}/edit(id=${myList.id})}">編集</a>
+    <form th:action="@{/lists/{id}/delete(id=${myList.id})}" method="post" style="display:inline;">
+      <input type="hidden" name="_method" value="delete"/>
+      <button type="submit">削除</button>
+    </form>
   </body>
 </html>

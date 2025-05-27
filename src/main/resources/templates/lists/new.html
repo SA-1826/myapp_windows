@@ -8,10 +8,10 @@
     <h1>MyList新規作成</h1>
     <form th:action="@{/lists}" th:object="${myList}" method="post">
       <label>タイトル：</label><br>
-      <input type="text" th:field="*{title}"><br>
+      <input type="text" th:field="*{title}" placeholder="タイトルを入力"><br>
 
       <label>本文：</label><br>
-      <input type="text" th:field="*{body}"><br><br>
+      <input type="text" th:field="*{body}" placeholder="本文を入力"><br><br>
 
       <button type="submit">作成</button>
     </form>

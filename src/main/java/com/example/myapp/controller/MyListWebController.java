@@ -27,7 +27,7 @@ public class MyListWebController {
   @GetMapping("/{id}")
   public String show(@PathVariable Long id, Model model) {
     MyList list = myListService.findById(id).orElseThrow(() -> new RuntimeException("ID " + id + " のデータが見つかりません"));
-    model.addAttribute("list", list);
+    model.addAttribute("myList", list);
     return "lists/show";
   }
 
