@@ -2,9 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
-    <title>MyList一覧</title>
+    <title>リスト一覧</title>
   </head>
   <body>
-    <h1>MyList一覧</h1>
+    <h1>リスト一覧</h1>
+    <a th:href="@{/lists/new}">+ 新規作成</a>
+    <table>
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>本文</th>
+          <th>更新日</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="list : ${lists}">
+          <td><a th:href="@{/lists/{id}(id=${list.id})}" th:text="${list.title}"></a></td>
+          <td th:text="${list.body}"></td>
+          <td th:text="${list.updatedAt.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy/MM/dd'))}"></td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
