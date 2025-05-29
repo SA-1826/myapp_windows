@@ -6,5 +6,16 @@
   </head>
   <body>
     <h1>MyList編集</h1>
+    <form th:action="@{/lists/{id}/update(id=${myList.id})}" th:object="${myList}" th:method="post">
+      <label>タイトル：</label><br>
+      <input type="text" th:field="*{title}"><br>
+
+      <label>本文：</label><br>
+      <input type="text" th:field="*{body}"><br>
+
+      <button type="submit">変更を保存</button>
+    </form>
+    <a th:href="@{/lists}">一覧に戻る</a>
+    <a th:href="@{/lists/{id}(id=${myList.id})}">詳細に戻る</a>
   </body>
 </html>

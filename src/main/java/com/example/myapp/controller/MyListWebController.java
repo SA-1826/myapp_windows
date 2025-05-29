@@ -48,16 +48,16 @@ public class MyListWebController {
   // 編集画面表示（GET /lists/{id}/edit）
   @GetMapping("/{id}/edit")
   public String edit(@PathVariable Long id, Model model) {
-    MyList list = myListService.findById(id).orElseThrow(() -> new RuntimeException("ID " + id + " のデータが見つかりません"));
-    model.addAttribute("list", list);
+    MyList list = myListService.findById(id).orElseThrow(() -> new IllegalArgumentException("指定されたIDのデータが存在しません" + id));
+    model.addAttribute("myList", list);
     return "lists/edit";
   }
 
   // 更新保存 (POST /lists/{id}/update)
   @PostMapping("/{id}/update")
   public String update(@PathVariable Long id, @ModelAttribute MyList myList) {
-    myListService.update(id, myList);
-    return "redirect:/lists";
+    MyList updatedList = myListService.update(id, myList);
+    return "redirect:/lists/" + updatedList.getId();
   }
 
   // 削除 (POST /lists/{id}/delete)
