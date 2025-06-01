@@ -6,6 +6,9 @@
   </head>
   <body>
     <h1>リスト詳細</h1>
+    <div th:if="$(myList.imagePath)">
+      <img th:src="${myList.imagePath}" alt="画像" style="max-width: 200px;">
+    </div>
     <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
     <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>
     <p><strong>本文：</strong><span th:text="${myList.body}"></span></p>

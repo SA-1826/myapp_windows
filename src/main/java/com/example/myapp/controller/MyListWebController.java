@@ -6,8 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/lists")
@@ -40,7 +45,21 @@ public class MyListWebController {
 
   // 新規作成保存（POST /lists）
   @PostMapping
-  public String create(@ModelAttribute MyList myList) {
+  public String create(@ModelAttribute MyList myList, @RequestParam("image") MultipartFile imageFile) throws IOException {
+    if (!imageFile.isEmpty()) {
+      String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+      String uploadDir = "uploads/";
+
+      File uploadPath = new File(uploadDir);
+      if (!uploadPath.exists()) {
+        uploadPath.mkdirs();
+      }
+
+      File dest = new File(uploadDir +fileName);
+      imageFile.transferTo(dest); // ファイルを保存
+
+      myList.setImagePath("/" + uploadDir +fileName); // 表示用にパス保存
+    }
     MyList savedList = myListService.save(myList); // 保存して戻り値をsavedListに受け取る
     return "redirect:/lists/" + savedList.getId();
   }

@@ -6,7 +6,8 @@
   </head>
   <body>
     <h1>MyList新規作成</h1>
-    <form th:action="@{/lists}" th:object="${myList}" method="post">
+    <form th:action="@{/lists}" th:object="${myList}" method="post" enctype="multipart/form-data">
+      <input type="file" name="image"><br>
       <label>タイトル：</label><br>
       <input type="text" th:field="*{title}" placeholder="タイトルを入力"><br>
 

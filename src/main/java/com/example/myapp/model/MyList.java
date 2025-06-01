@@ -22,6 +22,8 @@ public class MyList {
 
   private String body;
 
+  private String imagePath; // 画像ファイルのパス
+
   @CreatedDate
   @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt;
@@ -53,6 +55,14 @@ public class MyList {
 
   public void setBody(String body) {
     this.body = body;
+  }
+
+  public String getImagePath() {
+    return imagePath;
+  }
+
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
   }
 
   public LocalDateTime getCreatedAt() {
