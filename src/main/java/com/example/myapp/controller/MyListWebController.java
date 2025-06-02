@@ -48,17 +48,18 @@ public class MyListWebController {
   public String create(@ModelAttribute MyList myList, @RequestParam("image") MultipartFile imageFile) throws IOException {
     if (!imageFile.isEmpty()) {
       String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-      String uploadDir = "uploads/";
+      String uploadDir = System.getProperty("user.home") + "/myapp/uploads/";
 
       File uploadPath = new File(uploadDir);
       if (!uploadPath.exists()) {
         uploadPath.mkdirs();
       }
 
-      File dest = new File(uploadDir +fileName);
+      File dest = new File(uploadDir + fileName);
       imageFile.transferTo(dest); // ファイルを保存
 
-      myList.setImagePath("/" + uploadDir +fileName); // 表示用にパス保存
+      String webPath = "/uploads/" + fileName;
+      myList.setImagePath(webPath); // 表示用にパス保存
     }
     MyList savedList = myListService.save(myList); // 保存して戻り値をsavedListに受け取る
     return "redirect:/lists/" + savedList.getId();
