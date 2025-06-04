@@ -75,7 +75,30 @@ public class MyListWebController {
 
   // 更新保存 (POST /lists/{id}/update)
   @PostMapping("/{id}/update")
-  public String update(@PathVariable Long id, @ModelAttribute MyList myList) {
+  public String update(@PathVariable Long id, @ModelAttribute MyList myList, @RequestParam("image") MultipartFile imageFile) throws IOException {
+    // 既存データ取得
+    MyList exsistingList = myListService.findById(id).orElseThrow(() -> new IllegalArgumentException("指定されたIDのデータが存在しません" + id));
+    
+    // 新しい画像ファイルがアップロードされた場合
+    if (!imageFile.isEmpty()) {
+      String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+      String uploadDir = System.getProperty("user.home") + "/myapp/uploads/";
+
+      File uploadPath = new File(uploadDir);
+      if (!uploadPath.exists()) {
+        uploadPath.mkdirs();
+      }
+
+      File dest = new File(uploadDir + fileName);
+      imageFile.transferTo(dest);
+
+      myList.setImagePath("/uploads/" + fileName); // 新しいパスをセット
+    }
+    else {
+      myList.setImagePath(exsistingList.getImagePath()); // 新しい画像がアップロードされなければ既存のパスを維持
+    }
+
+    myList.setId(id);
     MyList updatedList = myListService.update(id, myList);
     return "redirect:/lists/" + updatedList.getId();
   }
