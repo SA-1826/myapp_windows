@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 @Controller
 @RequestMapping("/lists")
 public class MyListWebController {
@@ -46,7 +49,11 @@ public class MyListWebController {
 
   // 新規作成保存（POST /lists）
   @PostMapping
-  public String create(@ModelAttribute MyList myList, @RequestParam("image") MultipartFile imageFile) throws IOException {
+  public String create(@ModelAttribute @Valid MyList myList, BindingResult result, @RequestParam("image") MultipartFile imageFile, Model model) throws IOException {
+    if (result.hasErrors()) {
+      return "lists/new";
+    }
+
     if (!imageFile.isEmpty()) {
       String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
       String uploadDir = System.getProperty("user.home") + "/myapp/uploads/";
@@ -76,7 +83,11 @@ public class MyListWebController {
 
   // 更新保存 (POST /lists/{id}/update)
   @PostMapping("/{id}/update")
-  public String update(@PathVariable Long id, @ModelAttribute MyList myList, @RequestParam("image") MultipartFile imageFile) throws IOException {
+  public String update(@PathVariable Long id, @ModelAttribute @Valid MyList myList, BindingResult result, @RequestParam("image") MultipartFile imageFile, Model model) throws IOException {
+    if (result.hasErrors()) {
+      return "lists/edit";
+    }
+
     // 既存データ取得
     MyList exsistingList = myListService.findById(id).orElseThrow(() -> new IllegalArgumentException("指定されたIDのデータが存在しません" + id));
     

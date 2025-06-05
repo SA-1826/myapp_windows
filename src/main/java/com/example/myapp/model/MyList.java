@@ -3,6 +3,7 @@ package com.example.myapp.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,8 +19,10 @@ public class MyList {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotBlank(message = "タイトルを入力してください")
   private String title;
 
+  @NotBlank(message = "本文を入力してください")
   private String body;
 
   private String imagePath; // 画像ファイルのパス
