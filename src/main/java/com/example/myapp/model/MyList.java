@@ -19,10 +19,10 @@ public class MyList {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank(message = "タイトルを入力してください")
+  @NotBlank(message = "※タイトルを入力してください")
   private String title;
 
-  @NotBlank(message = "本文を入力してください")
+  @NotBlank(message = "※本文を入力してください")
   private String body;
 
   private String imagePath; // 画像ファイルのパス

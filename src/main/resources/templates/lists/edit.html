@@ -18,11 +18,11 @@
       
       <label>タイトル：</label><br>
       <input type="text" th:field="*{title}"><br>
-      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
 
       <label>本文：</label><br>
       <input type="text" th:field="*{body}"><br>
-      <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></p>
+      <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p>
 
       <button type="submit">変更を保存</button>
     </form>
