@@ -94,14 +94,10 @@ public class MyListWebController {
       imageFile.transferTo(dest);
 
       myList.setImagePath("/uploads/" + fileName); // 新しいパスをセット
-      System.out.println("新しい画像をセット：" + myList.getImagePath());
     }
     else {
       myList.setImagePath(exsistingList.getImagePath()); // 新しい画像がアップロードされなければ既存のパスを維持
-      System.out.println("画像は変更なし：" + myList.getImagePath());
     }
-
-    System.out.println("保存直前の imagePath：" + myList.getImagePath());
 
     myList.setId(id);
     MyList updatedList = myListService.update(id, myList);
