@@ -33,6 +33,7 @@ public class MyListWebController {
   public String show(@PathVariable Long id, Model model) {
     MyList list = myListService.findById(id).orElseThrow(() -> new IllegalArgumentException("指定されたIDのデータが存在しません" + id));
     model.addAttribute("myList", list);
+    model.addAttribute("timestamp", System.currentTimeMillis());
     return "lists/show";
   }
 
@@ -93,14 +94,18 @@ public class MyListWebController {
       imageFile.transferTo(dest);
 
       myList.setImagePath("/uploads/" + fileName); // 新しいパスをセット
+      System.out.println("新しい画像をセット：" + myList.getImagePath());
     }
     else {
       myList.setImagePath(exsistingList.getImagePath()); // 新しい画像がアップロードされなければ既存のパスを維持
+      System.out.println("画像は変更なし：" + myList.getImagePath());
     }
+
+    System.out.println("保存直前の imagePath：" + myList.getImagePath());
 
     myList.setId(id);
     MyList updatedList = myListService.update(id, myList);
-    return "redirect:/lists/" + updatedList.getId();
+    return "redirect:/lists/" + updatedList.getId() + "?t=" + System.currentTimeMillis();
   }
 
   // 削除 (POST /lists/{id}/delete)

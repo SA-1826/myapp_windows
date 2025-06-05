@@ -7,7 +7,8 @@
   <body>
     <h1>リスト詳細</h1>
     <div th:if="${myList.imagePath}">
-      <img th:src="@{${myList.imagePath}}" alt="画像" style="max-width: 200px;">
+      <img th:src="@{${myList.imagePath}(t=${timestamp})}" alt="画像" style="max-width: 200px;">
+      <p>現在の画像パス: <span th:text="${myList.imagePath}"></span></p>
     </div>
     <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
     <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>

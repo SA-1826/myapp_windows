@@ -23,17 +23,19 @@ public class MyListService {
     return myListRepository.findById(id);
   }
 
-  // 新規作成 or 更新（保存）
+  // 新規作成
   public MyList save(MyList myList) {
     return myListRepository.save(myList);
   }
 
   // 更新（保存）
-  public MyList update(Long id, MyList newList) {
-    MyList existing = myListRepository.findById(id).orElseThrow(() -> new RuntimeException("ID " + id + " のリストが見つかりませんでした"));
-    existing.setTitle(newList.getTitle());
-    existing.setBody(newList.getBody());
-    return myListRepository.save(existing);
+  public MyList update(Long id, MyList updatedList) {
+    MyList existing = myListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("指定されたIDのデータが存在しません" + id));
+    existing.setTitle(updatedList.getTitle());
+    existing.setBody(updatedList.getBody());
+    MyList saved = myListRepository.save(updatedList);
+    myListRepository.flush();
+    return saved;
   }
 
   // 削除
