@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -49,8 +50,9 @@ public class MyListWebController {
 
   // 新規作成保存（POST /lists）
   @PostMapping
-  public String create(@ModelAttribute @Valid MyList myList, BindingResult result, @RequestParam("image") MultipartFile imageFile, Model model) throws IOException {
+  public String create(@ModelAttribute @Valid MyList myList, BindingResult result, @RequestParam("image") MultipartFile imageFile, RedirectAttributes redirectAttributes, Model model) throws IOException {
     if (result.hasErrors()) {
+      model.addAttribute("errorMessage", "作成に失敗しました。入力内容を確認してください。");
       return "lists/new";
     }
 
@@ -70,6 +72,7 @@ public class MyListWebController {
       myList.setImagePath(webPath); // 表示用にパス保存
     }
     MyList savedList = myListService.save(myList); // 保存して戻り値をsavedListに受け取る
+    redirectAttributes.addFlashAttribute("message", "作成しました！");
     return "redirect:/lists/" + savedList.getId();
   }
 
@@ -83,8 +86,9 @@ public class MyListWebController {
 
   // 更新保存 (POST /lists/{id}/update)
   @PostMapping("/{id}/update")
-  public String update(@PathVariable Long id, @ModelAttribute @Valid MyList myList, BindingResult result, @RequestParam("image") MultipartFile imageFile, Model model) throws IOException {
+  public String update(@PathVariable Long id, @ModelAttribute @Valid MyList myList, BindingResult result, @RequestParam("image") MultipartFile imageFile, RedirectAttributes redirectAttributes, Model model) throws IOException {
     if (result.hasErrors()) {
+      model.addAttribute("errorMessage", "更新に失敗しました。入力内容を確認してください。");
       return "lists/edit";
     }
 
@@ -112,13 +116,15 @@ public class MyListWebController {
 
     myList.setId(id);
     MyList updatedList = myListService.update(id, myList);
+    redirectAttributes.addFlashAttribute("message", "更新しました！");
     return "redirect:/lists/" + updatedList.getId() + "?t=" + System.currentTimeMillis();
   }
 
   // 削除 (POST /lists/{id}/delete)
   @PostMapping("/{id}/delete")
-  public String delete(@PathVariable Long id) {
+  public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
     myListService.delete(id);
+    redirectAttributes.addFlashAttribute("message", "削除しました。");
     return "redirect:/lists";
   }
 }
