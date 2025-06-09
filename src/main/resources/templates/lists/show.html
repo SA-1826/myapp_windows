@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>MyList詳細</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  </head>
   <body>
-    <div th:replace="fragments/flash :: flashMessages"></div>
-    <h1>リスト詳細</h1>
-    <div th:if="${myList.imagePath}">
-      <img th:src="@{${myList.imagePath}(t=${timestamp})}" alt="画像" style="max-width: 200px;">
-    </div>
-    <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
-    <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>
-    <p><strong>本文：</strong><span th:text="${myList.body}"></span></p>
+    <div th:fragment="body">
+      <div th:replace="fragments/flash :: flashMessages"></div>
+      <h1>リスト詳細</h1>
+      <div th:if="${myList.imagePath}">
+        <img th:src="@{${myList.imagePath}(t=${timestamp})}" alt="画像" style="max-width: 200px;">
+      </div>
+      <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
+      <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>
+      <p><strong>本文：</strong><span th:text="${myList.body}"></span></p>
 
-    <a th:href="@{/lists}">一覧に戻る</a>
-    <a th:href="@{/lists/{id}/edit(id=${myList.id})}">編集</a>
-    <form th:action="@{/lists/{id}/delete(id=${myList.id})}" method="post" style="display:inline;">
-      <input type="hidden" name="_method" value="delete"/>
-      <button type="submit">削除</button>
-    </form>
+      <a th:href="@{/lists}">一覧に戻る</a>
+      <a th:href="@{/lists/{id}/edit(id=${myList.id})}">編集</a>
+      <form th:action="@{/lists/{id}/delete(id=${myList.id})}" method="post" style="display:inline;">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">削除</button>
+      </form>
+    </div>
   </body>
 </html>
