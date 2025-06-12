@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <div th:fragment="body">
-      <h1>ようこそ、My App へ！</h1>
-    </div>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+  <head>
+    <title th:text="ホーム画面">ホーム画面</title>
+  </head>
+
+  <div layout:fragment="content">
+    <h1>ようこそ、My App へ！</h1>
+    <p>このページはトップ画面です。</p>
+  </div>
 </html>

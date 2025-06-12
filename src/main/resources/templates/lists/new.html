@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <div th:fragment="body">
-      <div th:replace="fragments/flash :: flashMessages"></div>
-      <h1>MyList新規作成</h1>
-      <form th:action="@{/lists}" th:object="${myList}" method="post" enctype="multipart/form-data">
-        <div>
-          <input type="file" name="image"><br>
-        </div>
-        
-        <label>タイトル：</label><br>
-        <input type="text" th:field="*{title}" placeholder="タイトルを入力"><br>
-        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+  <head>
+    <title th:text="ホーム画面">新規作成画面</title>
+  </head>
 
-        <label>本文：</label><br>
-        <input type="text" th:field="*{body}" placeholder="本文を入力"><br>
-        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p><br>
+  <div layout:fragment="content">
+    <div th:replace="fragments/flash :: flashMessages"></div>
+    <h1>MyList新規作成</h1>
+    <form th:action="@{/lists}" th:object="${myList}" method="post" enctype="multipart/form-data">
+      <div>
+        <input type="file" name="image"><br>
+      </div>
+      
+      <label>タイトル：</label><br>
+      <input type="text" th:field="*{title}" placeholder="タイトルを入力"><br>
+      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
 
-        <button type="submit">作成</button>
-      </form>
-      <a th:href="@{/lists}">一覧に戻る</a>
-    </div>
-  </body>
+      <label>本文：</label><br>
+      <input type="text" th:field="*{body}" placeholder="本文を入力"><br>
+      <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p><br>
+
+      <button type="submit">作成</button>
+    </form>
+    <a th:href="@{/lists}">一覧に戻る</a>
+  </div>
 </html>

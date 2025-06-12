@@ -1,31 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <div th:fragment="body">
-      <div th:replace="fragments/flash :: flashMessages"></div>
-      <h1>MyList編集</h1>
-      <form th:action="@{/lists/{id}/update(id=${myList.id})}" th:object="${myList}" th:method="post" enctype="multipart/form-data">
-        <div>
-          <label>現在の画像：</label><br>
-          <img th:if="${myList.imagePath != null}" th:src="@{${myList.imagePath}}" alt="現在の画像" style="max-width: 200px;">
-        </div>
-        <div>
-          <label>新しい画像をアップロード：</label><br>
-          <input type="file" name="image">
-        </div>
-        
-        <label>タイトル：</label><br>
-        <input type="text" th:field="*{title}"><br>
-        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+  <head>
+    <title th:text="ホーム画面">編集画面</title>
+  </head>
 
-        <label>本文：</label><br>
-        <input type="text" th:field="*{body}"><br>
-        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p>
+  <div layout:fragment="content">
+    <div th:replace="fragments/flash :: flashMessages"></div>
+    <h1>MyList編集</h1>
+    <form th:action="@{/lists/{id}/update(id=${myList.id})}" th:object="${myList}" th:method="post" enctype="multipart/form-data">
+      <div>
+        <label>現在の画像：</label><br>
+        <img th:if="${myList.imagePath != null}" th:src="@{${myList.imagePath}}" alt="現在の画像" style="max-width: 200px;">
+      </div>
+      <div>
+        <label>新しい画像をアップロード：</label><br>
+        <input type="file" name="image">
+      </div>
+      
+      <label>タイトル：</label><br>
+      <input type="text" th:field="*{title}"><br>
+      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
 
-        <button type="submit">変更を保存</button>
-      </form>
-      <a th:href="@{/lists}">一覧に戻る</a>
-      <a th:href="@{/lists/{id}(id=${myList.id})}">詳細に戻る</a>
-    </div>
-  </body>
+      <label>本文：</label><br>
+      <input type="text" th:field="*{body}"><br>
+      <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p>
+
+      <button type="submit">変更を保存</button>
+    </form>
+    <a th:href="@{/lists}">一覧に戻る</a>
+    <a th:href="@{/lists/{id}(id=${myList.id})}">詳細に戻る</a>
+  </div>
 </html>

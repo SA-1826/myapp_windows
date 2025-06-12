@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <div th:fragment="body">
-      <div th:replace="fragments/flash :: flashMessages"></div>
-      <h1>リスト詳細</h1>
-      <div th:if="${myList.imagePath}">
-        <img th:src="@{${myList.imagePath}(t=${timestamp})}" alt="画像" style="max-width: 200px;">
-      </div>
-      <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
-      <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>
-      <p><strong>本文：</strong><span th:text="${myList.body}"></span></p>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+  <head>
+    <title th:text="ホーム画面">詳細表示画面</title>
+  </head>
 
-      <a th:href="@{/lists}">一覧に戻る</a>
-      <a th:href="@{/lists/{id}/edit(id=${myList.id})}">編集</a>
-      <form th:action="@{/lists/{id}/delete(id=${myList.id})}" method="post" style="display:inline;">
-        <input type="hidden" name="_method" value="delete"/>
-        <button type="submit">削除</button>
-      </form>
+  <div layout:fragment="content">
+    <div th:replace="fragments/flash :: flashMessages"></div>
+    <h1>リスト詳細</h1>
+    <div th:if="${myList.imagePath}">
+      <img th:src="@{${myList.imagePath}(t=${timestamp})}" alt="画像" style="max-width: 200px;">
     </div>
-  </body>
+    <p><strong>ID：</strong><span th:text="${myList.id}"></span></p>
+    <p><strong>タイトル：</strong><span th:text="${myList.title}"></span></p>
+    <p><strong>本文：</strong><span th:text="${myList.body}"></span></p>
+
+    <a th:href="@{/lists}">一覧に戻る</a>
+    <a th:href="@{/lists/{id}/edit(id=${myList.id})}">編集</a>
+    <form th:action="@{/lists/{id}/delete(id=${myList.id})}" method="post" style="display:inline;">
+      <input type="hidden" name="_method" value="delete"/>
+      <button type="submit">削除</button>
+    </form>
+  </div>
 </html>
