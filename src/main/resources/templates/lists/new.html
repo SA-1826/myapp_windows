@@ -5,23 +5,31 @@
   </head>
 
   <div layout:fragment="content">
-    <div th:replace="fragments/flash :: flashMessages"></div>
-    <h1>MyList新規作成</h1>
-    <form th:action="@{/lists}" th:object="${myList}" method="post" enctype="multipart/form-data">
-      <div>
-        <input type="file" name="image"><br>
+    <div class="row">
+      <div class="col-lg-8 offset-2">
+        <div th:replace="fragments/flash :: flashMessages"></div>
+        <h1 class="mb-3">MyList新規作成</h1>
+        <div class="card text-center">
+          <div class="card-body">
+            <form th:action="@{/lists}" th:object="${myList}" method="post" enctype="multipart/form-data">
+              <div class="mt-3">
+                <input type="file" name="image"><br>
+              </div>
+              
+              <label class="mt-3">タイトル：</label>
+              <input type="text" th:field="*{title}" placeholder="タイトルを入力" size="50x10"><br>
+              <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
+        
+              <label class="mt-3">本文　：</label>
+              <input type="text" th:field="*{body}" placeholder="本文を入力" size="50x30"><br>
+              <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p><br>
+        
+              <button type="submit" class="btn btn-primary px-5 mb-3">作成</button>
+            </form>
+            <a th:href="@{/lists}">一覧に戻る</a>
+          </div>
+        </div>
       </div>
-      
-      <label>タイトル：</label><br>
-      <input type="text" th:field="*{title}" placeholder="タイトルを入力"><br>
-      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
-
-      <label>本文：</label><br>
-      <input type="text" th:field="*{body}" placeholder="本文を入力"><br>
-      <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p><br>
-
-      <button type="submit">作成</button>
-    </form>
-    <a th:href="@{/lists}">一覧に戻る</a>
+    </div>
   </div>
 </html>

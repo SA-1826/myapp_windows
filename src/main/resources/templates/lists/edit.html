@@ -5,29 +5,37 @@
   </head>
 
   <div layout:fragment="content">
-    <div th:replace="fragments/flash :: flashMessages"></div>
-    <h1>MyList編集</h1>
-    <form th:action="@{/lists/{id}/update(id=${myList.id})}" th:object="${myList}" th:method="post" enctype="multipart/form-data">
-      <div>
-        <label>現在の画像：</label><br>
-        <img th:if="${myList.imagePath != null}" th:src="@{${myList.imagePath}}" alt="現在の画像" style="max-width: 200px;">
+    <div class="row">
+      <div class="col-lg-8 offset-2">
+        <div th:replace="fragments/flash :: flashMessages"></div>
+        <h1 class="mb-3">MyList編集</h1>
+        <div class="card text-center">
+          <div class="card-body">
+            <form th:action="@{/lists/{id}/update(id=${myList.id})}" th:object="${myList}" th:method="post" enctype="multipart/form-data">
+              <div class="mt-3">
+                <label>現在の画像：</label>
+                <img th:if="${myList.imagePath != null}" th:src="@{${myList.imagePath}}" alt="現在の画像" style="max-width: 200px;">
+              </div>
+              <div class="mt-3">
+                <label>新しい画像をアップロード：</label>
+                <input type="file" name="image">
+              </div>
+              
+              <label class="mt-3">タイトル：</label>
+              <input type="text" th:field="*{title}" size="50x10"><br>
+              <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
+        
+              <label class="mt-3">本文　：</label>
+              <input type="text" th:field="*{body}" size="50x30"><br>
+              <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p>
+        
+              <button type="submit" class="btn btn-primary px-5 my-3">変更を保存</button>
+            </form>
+            <a th:href="@{/lists}">一覧に戻る</a>
+            <a th:href="@{/lists/{id}(id=${myList.id})}">詳細に戻る</a>
+          </div>
+        </div>
       </div>
-      <div>
-        <label>新しい画像をアップロード：</label><br>
-        <input type="file" name="image">
-      </div>
-      
-      <label>タイトル：</label><br>
-      <input type="text" th:field="*{title}"><br>
-      <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
-
-      <label>本文：</label><br>
-      <input type="text" th:field="*{body}"><br>
-      <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color: red;"></p>
-
-      <button type="submit">変更を保存</button>
-    </form>
-    <a th:href="@{/lists}">一覧に戻る</a>
-    <a th:href="@{/lists/{id}(id=${myList.id})}">詳細に戻る</a>
+    </div>
   </div>
 </html>
